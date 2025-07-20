@@ -9,7 +9,7 @@ export default function A_EventDetails() {
     const [event, setEvent] = useState(null);
     const navigate = useNavigate();
     useEffect(() => {
-        axios.get(`/a_events/${id}`).then(response => {
+        axios.get(`/a_event/${id}`).then(response => {
             setEvent(response.data);
         });
     }, [id]);

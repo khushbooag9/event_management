@@ -21,6 +21,35 @@ const AddEvent = () => {
     reader.readAsDataURL(e.target.files[0]);
   };
 
+const handleGenerateDescription = async () => {
+  try {
+    const response = await fetch('http://localhost:4000/generate-description', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+      prompt: `Generate a short, engaging, and attractive event description (6-7 lines max) for an event called "${name}" happening at "${address}". 
+      Start the description with a catchy title using emojis. 
+      Write in a lively and natural tone. 
+      Don't give options or introductory phrases—just the best final description ready to be displayed as-is.`,
+      }),
+    });
+
+    const data = await response.json();
+    if (response.ok) {
+      setDescription(data.description);
+    } else {
+      console.error('AI generation failed:', data);
+      alert('AI generation failed');
+    }
+    } catch (error) {
+      console.error('AI generation failed:', error);
+      alert('AI generation failed');
+    }
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -84,13 +113,27 @@ const AddEvent = () => {
           <input type="date" id="rooms" name="rooms" value={rooms} onChange={(e) => setRooms(e.target.value)} className="mt-1 block w-full p-2.5 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
         </div>
         <div>
-          <label htmlFor="name" className="block text-sm font-medium text-gray-700">Description:</label>
-          <textarea type="text" id="description" name="description" value={description} onChange={(e) => setDescription(e.target.value)} className="mt-1 block w-full p-2.5 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+        <label htmlFor="name" className="block text-sm font-medium text-gray-700">Description:</label>
+        <textarea
+          type="text"
+          id="description"
+          name="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+          className="mt-1 block w-full p-2.5 border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+        />
+        <button
+          type="button"
+          onClick={handleGenerateDescription}
+          className="mt-2 px-3 py-1 bg-blue-600 text-white rounded-md hover:bg-blue-800"
+        >
+          Generate with AI
+        </button>
         </div>
         <div className='flex gap-60'>
          
         <div>
-          <button className=" bg-indigo-600 text-white font-bold py-2 px-4 rounded-md hover:bg-indigo-900 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50" onClick={(e) => handleSubmit(e)}>Add Event</button>
+          <button className=" bg-indigo-600 text-white font-bold py-2 px-4 rounded-md hover:bg-indigo-900 hover:text-gray-400 ml-60 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-opacity-50" onClick={(e) => handleSubmit(e)}>ADD EVENT</button>
         </div>
         </div>
       </form>

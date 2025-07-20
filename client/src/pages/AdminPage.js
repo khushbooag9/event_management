@@ -15,7 +15,7 @@ const AdminPage = ({ children }) => {
   };
 
   const handleCardClick = (eventId) => {
-    navigate(`/a_events/${eventId}`);
+    navigate(`/a_event/${eventId}`);
 };
 
   React.useEffect(() => {

@@ -2,17 +2,22 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const axios = require('axios');
+const dotenv = require('dotenv');
+dotenv.config();
 const user = require('./models/User');
 const admin = require('./models/Admin');
 const event = require('./models/Event');
 const Booking = require('./models/Booking');
+const { GoogleGenerativeAI } = require('@google/generative-ai');
 const multer = require('multer');
 const path = require('path');
 const app = express();
 
 const bcryptSalt = bcrypt.genSaltSync(10);
 const PORT = process.env.PORT || 4000;
-
+const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
 // Middleware to handle JSON and URL-encoded form data
 app.use(express.json());
@@ -28,6 +33,25 @@ mongoose.connect('mongodb://localhost:27017/event_management');
 app.get('/test', (req, res) => {
     res.json('test ok');
 });
+
+app.post('/generate-description', async (req, res) => {
+  try {
+    const prompt = req.body.prompt;
+    if (!prompt) {
+      return res.status(400).json({ error: 'Prompt is required' });
+    }
+
+    const result = await model.generateContent(prompt);
+    const response = await result.response;
+    const text = response.text();
+
+    res.json({ description: text });
+  } catch (err) {
+    console.error('Error generating description:', err); // Show full error
+    res.status(500).json({ error: 'Failed to generate description' });
+  }
+});
+
 
 // Feedback model
 const feedbackSchema = new mongoose.Schema({
@@ -173,13 +197,16 @@ app.get('/events/:id', async (req, res) => {
     }
 });
 
-// Fetch a single event by admin ID
-app.get('/a_events/:adminId', async (req, res) => {
+// Fetch a single event by event ID (with bookings count)
+app.get('/a_event/:eventId', async (req, res) => {
     try {
-        const adminId = req.params.adminId;
-        const events = await event.find({ adminId });
-        
-        const safeEvents = events.map(evt => ({
+        const eventId = req.params.eventId;
+        const evt = await event.findById(eventId);
+        if (!evt) {
+            return res.status(404).send('Event not found');
+        }
+        const bookingsCount = await Booking.countDocuments({ event: evt._id });
+        res.json({
             _id: evt._id,
             image: evt.image,
             name: evt.name,
@@ -188,8 +215,35 @@ app.get('/a_events/:adminId', async (req, res) => {
             rooms: evt.rooms,
             description: evt.description,
             date_added: evt.date_added,
-        }));
+            bookingsCount
+        });
+    } catch (error) {
+        console.error('Error fetching event:', error);
+        res.status(500).send('Server Error');
+    }
+});
 
+// Fetch a single event by admin ID
+app.get('/a_events/:adminId', async (req, res) => {
+    try {
+        const adminId = req.params.adminId;
+        const events = await event.find({ adminId });
+        
+        const safeEvents = await Promise.all(events.map(async (evt) => {
+        const bookingCount = await Booking.countDocuments({ event: evt._id });
+
+        return {
+            _id: evt._id,
+            image: evt.image,
+            name: evt.name,
+            address: evt.address,
+            price: evt.price,
+            rooms: evt.rooms,
+            description: evt.description,
+            date_added: evt.date_added,
+            participants: bookingCount
+        };
+        }));
         res.json(safeEvents);
     } catch (error) {
         console.error('Error fetching admin events:', error);
