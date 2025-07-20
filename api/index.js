@@ -28,7 +28,7 @@ app.use(cors({
     origin: true,
 }));
 
-mongoose.connect(process.env.MONGO_URI, {
+mongoose.connect(process.env.MONGOURI, {
     useNewUrlParser: true,
     useUnifiedTopology: true
 })
