@@ -1,0 +1,99 @@
+footer {
+    width: 100%;
+    position: relative;
+    background: linear-gradient(to right, #b0b9f0, #cfabf3);
+    color: brown;
+    font-size: 15px;
+    line-height: 20px;
+    /* font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; */
+}
+
+.page-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 50vh;
+}
+
+.content-wrap {
+    flex: 1;
+}
+
+.row {
+    width: 85%;
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    gap: 25px;
+}
+
+.column {
+    flex-basis: 35%;
+    padding: 12px;
+} 
+
+.footer_logo {
+    height: 35px;
+    width: 125px;
+    margin-top: 6px;
+}
+.logo_title{
+    display: flex;
+}
+.logo_title h3{
+    margin-top: 0px;
+}
+
+.column h3 {
+    width: fit-content;
+    margin-bottom: 10px;
+    position: relative;
+    color: brown;
+    text-decoration: underline solid whitesmoke;
+    text-decoration-thickness: 2px;
+    text-shadow: 0.8px 0.8px rgb(255, 244, 121);
+    font-size: 18px;
+    padding: 20px;
+    font-weight: 500;
+}
+
+.column p {
+    color: black;
+    font-size: 15px;
+    padding: 2px;
+}
+
+.column h4 {
+    color: black;
+}
+
+.email-id {
+    width: fit-content;
+    border-bottom: 2px solid rgb(255, 255, 255);
+    margin: 10px 0;
+}
+
+.column ul li {
+    list-style: none;
+    margin-bottom: 10px;
+    color: #000;
+}
+
+#social-icons a{
+    text-align: center;
+    padding: 10px;
+    font-size: 20px;
+    color: black;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+#social-icons a:hover{
+    color: blue;
+}
+
+.copyright {
+    margin-left: 114px;
+    margin-bottom: 2px;
+    font-weight: 600;
+    padding: 8px;
+}

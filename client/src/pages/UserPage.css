@@ -1,0 +1,36 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(to right, #b0b9f0, #cfabf3);
+    height: 9vh;
+    align-items: center;
+}
+
+.logo img {
+    height: 40px;
+    width: 132px;
+    margin-top: 0px;
+    margin-left: 10px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 32px;
+    font-weight: 500;
+    gap: 1px;
+}
+.user_page_right{
+    font-size: 18px;
+    display: flex;
+    font-weight: 700;
+    gap: 25px;
+    padding: 20px;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    cursor: pointer;
+}
+.user_page_right a:hover{
+    transition: color 0.3s ease;
+    color: rgb(122, 74, 233);
+}

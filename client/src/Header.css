@@ -1,0 +1,41 @@
+header {
+    display: flex;
+    justify-content: space-between;
+    background: linear-gradient(to right, #b0b9f0, #cfabf3);
+    height: 9vh;
+    align-items: center;
+}
+
+.logo img {
+    height: 55px;
+    width: 164px;
+    margin-top: 0px;
+    margin-left: 5px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-size: 32px;
+    font-weight: 500;
+    gap: 1px;
+}
+
+
+.right {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 20px;
+    margin-right: 1.6rem;
+    font-weight: 400;
+    font-family: 'Times New Roman', Times, serif;
+}
+
+.right select{
+    cursor: pointer;
+    border: 0px;
+    background: none;
+    font-size: 20px;
+    padding: 0px;
+}
