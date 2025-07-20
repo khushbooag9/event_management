@@ -24,6 +24,7 @@ export default function LoginPage() {
                     navigate('/UserPage'); 
                 } else {
                     setLandlord(response.data);
+                    localStorage.setItem('adminId', response.data._id); 
                     navigate('/AdminPage'); 
                 }
             }

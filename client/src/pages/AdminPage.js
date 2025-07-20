@@ -21,7 +21,8 @@ const AdminPage = ({ children }) => {
   React.useEffect(() => {
     const fetchEvents = async () => {
         try {
-            const response = await axios.get('/events');
+            const adminId = localStorage.getItem('adminId');
+            const response = await axios.get(`http://localhost:4000/a_events/${adminId}`);
             setEvents(response.data);
         } catch (error) {
             console.error('Error fetching events:', error);

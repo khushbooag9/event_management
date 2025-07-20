@@ -174,30 +174,29 @@ app.get('/events/:id', async (req, res) => {
 });
 
 // Fetch a single event by admin ID
-app.get('/a_events/:id', async (req, res) => {
+app.get('/a_events/:adminId', async (req, res) => {
     try {
-        const foundEvent = await event.findById(req.params.id).lean();
-        if (!foundEvent) {
-            return res.status(404).send('event not found');
-        }
-        const bookingsCount = await Booking.countDocuments({ event: foundEvent._id });
-        const safeProperty = {
-            image: foundEvent.image,
-            description: foundEvent.description,
-            address: foundEvent.address,
-            price: foundEvent.price,
-            rooms: foundEvent.rooms,
-            name: foundEvent.name,
-            date_added: foundEvent.date_added,
-            _id: foundEvent._id.toString(),
-            bookingsCount
-        };
-        res.json(safeProperty);
+        const adminId = req.params.adminId;
+        const events = await event.find({ adminId });
+        
+        const safeEvents = events.map(evt => ({
+            _id: evt._id,
+            image: evt.image,
+            name: evt.name,
+            address: evt.address,
+            price: evt.price,
+            rooms: evt.rooms,
+            description: evt.description,
+            date_added: evt.date_added,
+        }));
+
+        res.json(safeEvents);
     } catch (error) {
-        console.error('Error fetching event:', error);
+        console.error('Error fetching admin events:', error);
         res.status(500).send('Server Error');
     }
 });
+
 
 // Multer setup for file uploads
 const storage = multer.diskStorage({
@@ -229,7 +228,7 @@ module.exports = upload;
 // Add event route
 app.post('/events/add', upload.single('image'), async (req, res) => {
     try {
-        const { name, amenities, rooms, resources, area, address, price, landl_name,description } = req.body;
+        const { name, amenities, rooms, resources, area, address, price, landl_name,description, adminId } = req.body;
         const image = req.file ? `/uploads/${req.file.filename}` : '';
 
         const newProperty = new event({
@@ -243,6 +242,7 @@ app.post('/events/add', upload.single('image'), async (req, res) => {
             address,
             price,
             landl_name,
+            adminId,
             date_added: new Date(),
             featured: false
         });

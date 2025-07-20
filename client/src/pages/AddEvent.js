@@ -23,6 +23,7 @@ const AddEvent = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const formData = new FormData();
     formData.append('landl_name', landl_name);
     formData.append('image', image);
@@ -30,6 +31,7 @@ const AddEvent = () => {
     formData.append('address', address);
     formData.append('price', price);
     formData.append('rooms', rooms);
+    formData.append('adminId', localStorage.getItem('adminId'));
     formData.append('description', description);
 
     try {

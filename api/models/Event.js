@@ -28,6 +28,11 @@ const EventSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  adminId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Admin', 
+    required: true
+  },
   date_added: {
     type: Date,
     required: true,
