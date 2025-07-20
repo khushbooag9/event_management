@@ -28,7 +28,12 @@ app.use(cors({
     origin: true,
 }));
 
-mongoose.connect('mongodb://localhost:27017/event_management');
+mongoose.connect(process.env.MONGO_URL, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true
+})
+.then(() => console.log('MongoDB connected'))
+.catch(err => console.error(err));
 
 app.get('/test', (req, res) => {
     res.json('test ok');
