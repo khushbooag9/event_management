@@ -23,7 +23,7 @@ const AddEvent = () => {
 
 const handleGenerateDescription = async () => {
   try {
-    const response = await fetch('/generate-description', {
+    const response = await fetch('https://event-management-y1ne.onrender.com/generate-description', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -36,7 +36,8 @@ const handleGenerateDescription = async () => {
       }),
     });
 
-    const data = await response.json();
+    const text = await response.text();
+    const data = text ? JSON.parse(text) : {};
     if (response.ok) {
       setDescription(data.description);
     } else {
@@ -64,7 +65,7 @@ const handleGenerateDescription = async () => {
     formData.append('description', description);
 
     try {
-      const response = await fetch('http://localhost:4000/events/add', {
+      const response = await fetch('/events/add', {
         method: 'POST',
         body: formData,
       });
