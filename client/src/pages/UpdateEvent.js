@@ -52,7 +52,7 @@ const UpdateEvent = () => {
 
     console.log('Form data being sent:', event);
 
-    const requestUrl = `/events/${id}`;
+    const requestUrl = `https://event-management-y1ne.onrender.com/events/${id}`;
 
     try {
       const response = await axios.put(requestUrl, formData, {
