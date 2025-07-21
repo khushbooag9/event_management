@@ -21,7 +21,7 @@ import UpdateEvent from './pages/UpdateEvent.js';
 import BookedEvents from './pages/BookedEvents.js';
 import { LandlordProvider } from './landlordContext.js';
 
-axios.defaults.baseURL = "https://event-management-y1ne.onrender.com";
+// axios.defaults.baseURL = "https://event-management-y1ne.onrender.com";
 axios.defaults.withCredentials = true;
 
 function App() {

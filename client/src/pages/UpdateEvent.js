@@ -18,7 +18,7 @@ const UpdateEvent = () => {
     console.log('Event ID:', id); // Log the ID to confirm it's being received
     const fetchEvent = async () => {
       try {
-        const response = await axios.get(`/events/${id}`);
+        const response = await axios.get(`https://event-management-y1ne.onrender.com/events/${id}`);
         setEvent(response.data);
       } catch (error) {
         console.error('Error fetching event:', error);

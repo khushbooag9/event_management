@@ -65,7 +65,7 @@ const handleGenerateDescription = async () => {
     formData.append('description', description);
 
     try {
-      const response = await fetch('/events/add', {
+      const response = await fetch('https://event-management-y1ne.onrender.com/events/add', {
         method: 'POST',
         body: formData,
       });

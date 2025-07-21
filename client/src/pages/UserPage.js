@@ -19,13 +19,13 @@ export default function UserPage() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        axios.get('/events').then(response => {
+        axios.get('https://event-management-y1ne.onrender.com/events').then(response => {
             setEvents(response.data);
             setFilteredEvents(response.data);
         });
         // Fetch bookings for this user
         if (tenant?._id) {
-            axios.get(`/bookings/user/${tenant._id}`).then(res => {
+            axios.get(`https://event-management-y1ne.onrender.com/bookings/user/${tenant._id}`).then(res => {
                 // res.data should be an array of bookings
                 setBookedEventIds(res.data.map(booking => booking.event));
             });

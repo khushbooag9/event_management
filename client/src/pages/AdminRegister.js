@@ -19,7 +19,7 @@ export default function AdminRegister() {
             return;
         }
         try{
-            await axios.post('/adminRegister',{
+            await axios.post('https://event-management-y1ne.onrender.com/adminRegister',{
                 name, email, password, address, phone_no,
             });
             alert('Registration successful. Now you can login.');

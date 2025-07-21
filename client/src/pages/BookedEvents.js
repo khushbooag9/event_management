@@ -12,7 +12,7 @@ export default function BookedEvents() {
 
     useEffect(() => {
         if (tenant?._id) {
-            axios.get(`/bookings/user/${tenant._id}`)
+            axios.get(`https://event-management-y1ne.onrender.com/bookings/user/${tenant._id}`)
                 .then(async res => {
                     const bookingEventIds = res.data.map(b => b.event);
                     const allEvents = await axios.get('/events');

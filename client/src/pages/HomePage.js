@@ -10,7 +10,7 @@ export default function HomePage() {
 
     useEffect(() => {
         // Fetch recently added events
-        axios.get('/events?sort=date_added&limit=10').then(response => {
+        axios.get('https://event-management-y1ne.onrender.com/events?sort=date_added&limit=10').then(response => {
             setRecentEvents(response.data);
             setFilteredEvents(response.data);
         });

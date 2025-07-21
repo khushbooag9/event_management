@@ -21,12 +21,12 @@ async function handlePayment(e) {
   if (!event) return;
 
   try {
-    const orderRes = await axios.post('/payment/checkout', {
+    const orderRes = await axios.post('https://event-management-y1ne.onrender.com/payment/checkout', {
       amount: event.price * 100,
     });
 
     const { id: order_id, amount } = orderRes.data;
-    const keyRes = await axios.get('/payment/key');
+    const keyRes = await axios.get('https://event-management-y1ne.onrender.com/payment/key');
     const { key_id } = keyRes.data;
 
     const options = {
@@ -53,7 +53,7 @@ async function handlePayment(e) {
         try {
           console.log("Sending userId:", tenant._id);
           const verifyRes = await axios.post(
-            '/payment/verification',
+            'https://event-management-y1ne.onrender.com/payment/verification',
             {
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_order_id: response.razorpay_order_id,

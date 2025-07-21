@@ -8,7 +8,7 @@ export default function EventDetails() {
     const { id } = useParams();
     const [event, setEvent] = useState(null);
     useEffect(() => {
-        axios.get(`/events/${id}`).then(response => {
+        axios.get(`https://event-management-y1ne.onrender.com/events/${id}`).then(response => {
             setEvent(response.data);
             console.log(response.data);
         });

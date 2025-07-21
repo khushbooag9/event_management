@@ -16,7 +16,7 @@ export default function LoginPage() {
     async function handleLoginSubmit(ev) {
         ev.preventDefault();
         try {
-            const response = await axios.post('/login', { email, password, userType });
+            const response = await axios.post('https://event-management-y1ne.onrender.com/login', { email, password, userType });
             if (response.status === 200) {
                 alert("Login successful");
                 if (userType === 'User') {

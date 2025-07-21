@@ -22,7 +22,7 @@ const AdminPage = ({ children }) => {
     const fetchEvents = async () => {
         try {
             const adminId = localStorage.getItem('adminId');
-            const response = await axios.get(`/a_events/${adminId}`);
+            const response = await axios.get(`https://event-management-y1ne.onrender.com/a_events/${adminId}`);
             setEvents(response.data);
         } catch (error) {
             console.error('Error fetching events:', error);
@@ -38,7 +38,7 @@ const AdminPage = ({ children }) => {
 
   const handleDeleteClick = async (id) => {
     try {
-      await axios.delete(`/events/${id}`);
+      await axios.delete(`https://event-management-y1ne.onrender.com/events/${id}`);
       setEvents(events.filter((event) => event._id !== id));
       alert('Event deleted successfully');
     } catch (error) {

@@ -18,7 +18,7 @@ export default function UserRegister(){
             return;
         }
         try{
-            await axios.post('/UserRegister',{
+            await axios.post('https://event-management-y1ne.onrender.com/UserRegister',{
                 name, email, password, address, phone_no,
             });
             alert('Registration successful. Now you can login.');
