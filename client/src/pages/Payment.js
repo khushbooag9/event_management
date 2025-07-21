@@ -11,7 +11,7 @@ export default function Payment() {
 
   useEffect(() => {
     if (!id) return;
-    axios.get(`/events/${id}`)
+    axios.get(`https://event-management-y1ne.onrender.com/events/${id}`)
       .then((res) => setEvent(res.data))
       .catch((err) => console.error('Event Fetch Error:', err));
   }, [id]);
