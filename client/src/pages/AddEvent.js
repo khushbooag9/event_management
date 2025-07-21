@@ -23,7 +23,7 @@ const AddEvent = () => {
 
 const handleGenerateDescription = async () => {
   try {
-    const response = await fetch('http://localhost:4000/generate-description', {
+    const response = await fetch('/generate-description', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

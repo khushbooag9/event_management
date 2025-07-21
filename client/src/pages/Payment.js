@@ -21,12 +21,12 @@ async function handlePayment(e) {
   if (!event) return;
 
   try {
-    const orderRes = await axios.post('http://localhost:4000/payment/checkout', {
+    const orderRes = await axios.post('/payment/checkout', {
       amount: event.price * 100,
     });
 
     const { id: order_id, amount } = orderRes.data;
-    const keyRes = await axios.get('http://localhost:4000/payment/key');
+    const keyRes = await axios.get('/payment/key');
     const { key_id } = keyRes.data;
 
     const options = {
@@ -53,7 +53,7 @@ async function handlePayment(e) {
         try {
           console.log("Sending userId:", tenant._id);
           const verifyRes = await axios.post(
-            'http://localhost:4000/payment/verification',
+            '/payment/verification',
             {
               razorpay_payment_id: response.razorpay_payment_id,
               razorpay_order_id: response.razorpay_order_id,
@@ -67,7 +67,7 @@ async function handlePayment(e) {
           );
 
           if (verifyRes.data.success) {
-            window.location.href = "http://localhost:3000/UserPage";
+            window.location.href = "/UserPage";
           } else {
             alert('Payment verification failed!');
           }

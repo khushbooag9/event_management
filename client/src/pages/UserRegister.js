@@ -18,7 +18,7 @@ export default function UserRegister(){
             return;
         }
         try{
-            await axios.post('http://localhost:4000/UserRegister',{
+            await axios.post('/UserRegister',{
                 name, email, password, address, phone_no,
             });
             alert('Registration successful. Now you can login.');

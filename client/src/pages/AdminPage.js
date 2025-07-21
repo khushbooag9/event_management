@@ -22,7 +22,7 @@ const AdminPage = ({ children }) => {
     const fetchEvents = async () => {
         try {
             const adminId = localStorage.getItem('adminId');
-            const response = await axios.get(`http://localhost:4000/a_events/${adminId}`);
+            const response = await axios.get(`/a_events/${adminId}`);
             setEvents(response.data);
         } catch (error) {
             console.error('Error fetching events:', error);
