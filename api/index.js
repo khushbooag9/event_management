@@ -36,7 +36,7 @@ app.get('/test', (req, res) => {
     res.json('test ok');
 });
 
-app.post('https://event-management-y1ne.onrender.com/generate-description', async (req, res) => {
+app.post('/generate-description', async (req, res) => {
   try {
     const prompt = req.body.prompt;
     if (!prompt) {
