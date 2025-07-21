@@ -15,7 +15,7 @@ export default function BookedEvents() {
             axios.get(`https://event-management-y1ne.onrender.com/bookings/user/${tenant._id}`)
                 .then(async res => {
                     const bookingEventIds = res.data.map(b => b.event);
-                    const allEvents = await axios.get('/events');
+                    const allEvents = await axios.get('https://event-management-y1ne.onrender.com/events');
                     const filtered = allEvents.data.filter(e => bookingEventIds.includes(e._id));
                     setBookedEvents(filtered);
                 });
@@ -44,7 +44,7 @@ export default function BookedEvents() {
                     >
                         <div className="p-1 w-full">
                             {event.image && (
-                                <img src={`http://localhost:4000${event.image}`} alt="Event" className="h-72 w-full object-cover" />
+                                <img src={`https://event-management-y1ne.onrender.com${event.image}`} alt="Event" className="h-72 w-full object-cover" />
                             )}
                         </div>
                         <div className="p-1 ml-1 mt-0 font-semibold">

@@ -22,7 +22,7 @@ export default function EventDetails() {
                 <h1 className="text-5xl font-bold mt-2 ml-2">{event.name}</h1>
                 <p className="text-sm text-gray-500 ml-2 mt-2">Added on: {new Date(event.date_added).toLocaleDateString()}</p>
                 {event.image && (
-                    <img src={`http://localhost:4000${event.image}`} alt="Event" className="prop_img object-cover rounded-md mt-4" />
+                    <img src={`https://event-management-y1ne.onrender.com${event.image}`} alt="Event" className="prop_img object-cover rounded-md mt-4" />
                 )}
                 <p className="text-lg mt-2 font-semibold">Event Date: {event.rooms ? new Date(event.rooms).toLocaleDateString() : ''}</p>
                 <p className="text-lg mt-2 font-semibold">Venue: {event.address}</p>

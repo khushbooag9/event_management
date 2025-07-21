@@ -74,7 +74,7 @@ const AdminPage = ({ children }) => {
           ) : (
             events.map(event => (
               <div key={event.id}  className="property-card bg-white shadow-md rounded-lg overflow-hidden">
-                <img src={`http://localhost:4000${event.image}`} alt={event.name} className="property-image p-1 w-full h-72 object-cover" onClick={() => handleCardClick(event._id)}/>
+                <img src={`https://event-management-y1ne.onrender.com${event.image}`} alt={event.name} className="property-image p-1 w-full h-72 object-cover" onClick={() => handleCardClick(event._id)}/>
                 <div className="property-details p-3 pt-2 " onClick={() => handleCardClick(event._id)}>
                   <h3 className="property-name text-lg font-bold">{event.name}</h3>
                   <p className="property-location text-gray-600 font-semibold">{event.address}</p>
