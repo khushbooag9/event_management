@@ -25,7 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(cors({
     credentials: true,
-    origin: 'https://event-management-portal-eta.vercel.app',
+    origin: true,
 }));
 
 mongoose.connect(process.env.MONGO_URI)
