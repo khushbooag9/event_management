@@ -20,12 +20,13 @@ const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
 
 // Middleware to handle JSON and URL-encoded form data
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: '10mb' })); // or more if needed
+app.use(express.urlencoded({ limit: '10mb', extended: true }));
 
 app.use(cors({
     credentials: true,
-    origin: true,
+    origin: 'https://event-management-portal-eta.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
 }));
 
 mongoose.connect(process.env.MONGO_URI)
