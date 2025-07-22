@@ -253,18 +253,6 @@ app.get('/a_events/:adminId', async (req, res) => {
     }
 });
 
-
-// Multer setup for file uploads
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, 'uploads/');
-    },
-    filename: (req, file, cb) => {
-        const ext = path.extname(file.originalname);
-        cb(null, Date.now() + ext);
-    }
-});
-
 // File filter function to accept only .png and .jpg files
 const fileFilter = (req, file, cb) => {
     if (file.mimetype === 'image/png' || file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg') {
@@ -282,13 +270,12 @@ const upload = multer({
 module.exports = upload;
 
 // Add event route
-app.post('/events/add', upload.single('image'), async (req, res) => {
+app.post('/events/add', async (req, res) => {
     try {
-        const { name, amenities, rooms, resources, area, address, price, landl_name,description, adminId } = req.body;
-        const image = req.file ? `/uploads/${req.file.filename}` : '';
+        const { name, amenities, rooms, resources, area, address, price, landl_name, description, adminId, image } = req.body;
 
-        const newProperty = new event({
-            image,
+        const newEvent = new event({
+            image, // This is base64
             name,
             amenities,
             rooms,
@@ -303,13 +290,14 @@ app.post('/events/add', upload.single('image'), async (req, res) => {
             featured: false
         });
 
-        await newProperty.save();
-        res.status(201).json({ message: 'event added successfully' });
+        await newEvent.save();
+        res.status(201).json({ message: 'Event added successfully' });
     } catch (error) {
         console.error(error);
         res.status(500).send('Server Error');
     }
 });
+
 
 // Middleware to serve static files from the uploads directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));

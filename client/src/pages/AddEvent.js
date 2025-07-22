@@ -11,15 +11,19 @@ const AddEvent = () => {
   const [rooms, setRooms] = useState('');
   const navigate = useNavigate();
 
-  const handleImageChange = (e) => {
-    setImage(e.target.files[0]);
-    const reader = new FileReader();
-    reader.onload = () => {
-      document.getElementById('image-preview').src = reader.result;
-      document.getElementById('image-preview').style.display = 'block';
-    };
-    reader.readAsDataURL(e.target.files[0]);
+const handleImageChange = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    setImage(reader.result); // Save base64 string in state
+    document.getElementById('image-preview').src = reader.result;
+    document.getElementById('image-preview').style.display = 'block';
   };
+  reader.readAsDataURL(file);
+};
+
 
 const handleGenerateDescription = async () => {
   try {
