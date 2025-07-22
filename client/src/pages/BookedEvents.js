@@ -44,7 +44,7 @@ export default function BookedEvents() {
                     >
                         <div className="p-1 w-full">
                             {event.image && (
-                                <img src={`https://event-management-y1ne.onrender.com${event.image}`} alt="Event" className="h-72 w-full object-cover" />
+                                <img src={event.image} alt="Event" className="h-72 w-full object-cover" />
                             )}
                         </div>
                         <div className="p-1 ml-1 mt-0 font-semibold">
