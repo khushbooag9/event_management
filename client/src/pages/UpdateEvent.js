@@ -35,39 +35,34 @@ const UpdateEvent = () => {
     setEvent({ ...event, [name]: value });
   };
 
-  const handleImageChange = (e) => {
-    setEvent({ ...event, image: e.target.files[0] });
+const handleImageChange = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onloadend = () => {
+    setEvent({ ...event, image: reader.result }); // base64 string
   };
+  reader.readAsDataURL(file);
+};
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('name', event.name);
-    formData.append('address', event.address);
-    formData.append('price', event.price);
-    formData.append('description', event.description);
-    if (event.image) {
-      formData.append('image', event.image);
-    }
 
-    console.log('Form data being sent:', event);
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const requestUrl = `https://event-management-y1ne.onrender.com/events/${id}`;
+  const requestUrl = `https://event-management-y1ne.onrender.com/events/${id}`;
 
-    try {
-      const response = await axios.put(requestUrl, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
-      console.log('Event updated:', response.data);
-      alert('Event updated successfully');
-      navigate('/AdminPage'); // Redirect to the admin page
-    } catch (error) {
-      console.error('Error updating event:', error);
-      alert('Error updating event. Please try again.');
-    }
-  };
+  try {
+    const response = await axios.put(requestUrl, event); // sending JSON
+    console.log('Event updated:', response.data);
+    alert('Event updated successfully');
+    navigate('/AdminPage');
+  } catch (error) {
+    console.error('Error updating event:', error);
+    alert('Error updating event. Please try again.');
+  }
+};
+
 
   return (
     <div className="max-w-2xl mt-5 mb-8 mx-auto p-6 bg-white shadow-md rounded-md">

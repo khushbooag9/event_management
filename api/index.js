@@ -253,21 +253,6 @@ app.get('/a_events/:adminId', async (req, res) => {
     }
 });
 
-// File filter function to accept only .png and .jpg files
-const fileFilter = (req, file, cb) => {
-    if (file.mimetype === 'image/png' || file.mimetype === 'image/jpeg' || file.mimetype === 'image/jpg') {
-        cb(null, true);
-    } else {
-        cb(new Error('Only .png, .jpg, or .jpeg files are allowed!'), false);
-    }
-};
-
-const upload = multer({
-    fileFilter: fileFilter,
-    storage: storage
-});
-
-module.exports = upload;
 
 // Add event route
 app.post('/events/add', async (req, res) => {
@@ -298,40 +283,33 @@ app.post('/events/add', async (req, res) => {
     }
 });
 
-
-// Middleware to serve static files from the uploads directory
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-app.put('/events/:id', upload.single('image'), async (req, res) => {
+app.put('/events/:id', async (req, res) => {
   const { id } = req.params;
   const updateData = req.body;
-
-  if (req.file) {
-    updateData.image = `/uploads/${req.file.filename}`;
-  }
 
   console.log('Update request received for event ID:', id);
   console.log('Update data:', updateData);
 
   try {
-    const updatedProperty = await event.findByIdAndUpdate(
+    const updatedEvent = await event.findByIdAndUpdate(
       id,
       { $set: updateData },
       { new: true, runValidators: true }
     );
 
-    if (!updatedProperty) {
-      console.log('event not found');
-      return res.status(404).send('event not found');
+    if (!updatedEvent) {
+      console.log('Event not found');
+      return res.status(404).send('Event not found');
     }
 
-    console.log('Updated event:', updatedProperty);
-    res.json(updatedProperty); // Respond with the updated event details
+    console.log('Updated event:', updatedEvent);
+    res.json(updatedEvent); // Respond with the updated event details
   } catch (error) {
     console.error('Error updating event:', error);
     res.status(500).send('Server error');
   }
 });
+
 
 // Delete event by ID
 app.delete('/events/:id', async (req, res) => {
